@@ -1,0 +1,143 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>机房管理</title>
+	<link rel="stylesheet" type="text/css" href="css/comm.css">
+	<link rel="stylesheet" type="text/css" href="css/IDC.css">	
+</head>
+
+<body>
+	<div id="Crumbs">机房管理&nbsp;>&nbsp;&nbsp;机房</div>
+	<div id="container">				
+		<table width=100% cellspacing="0" cellpadding="0">
+		<tbody><tr>
+			<td width="20%">
+				<button class="head_butt" href="javascript:void(0)" onclick="AddIDC()">新增</button>
+				<button class="head_butt" href="javascript:void(0)" onclick="DelIDC()">删除</button>
+				<button class="head_butt" href="javascript:void(0)" onclick="EditIDC()">变更</button>
+			</td>
+			<td align="right">
+				<select id="filt_key">
+					<option value="idc">机房</option>
+					<option value="contact">联系人</option>
+					<option value="mobile">联系电话</option>
+					<option value="email">电子邮件</option>
+					<option value="address">地址</option>
+				</select>
+				<input type="text" id="filt_value">
+				<button class="head_butt" href="javascript:void(0)" onclick="tofilt()" style="width: 70px;">快速查找</button>
+			</td>
+		</tr></tbody>
+		</table>
+		
+		<table id="tab_idc_list" width=100% cellspacing="0" cellpadding="0">
+			<thead>
+				<th style="border-left: 0" width="50px">序号</th>
+				<th width="250px">机房</th>
+				<th width="70px">联系人</th>
+				<th width="100px">联系电话</th>
+				<th width="200px">电子邮件</th>
+				<th width="250px">地址</th>
+				<th>说明</th>							
+			</thead>
+			<tbody id="tbody_idc_list">
+			</tbody>
+		</table>
+
+		<div id="pages">
+			<button id="Fir_page" href="javascript:void(0)" onclick="Topage(1)" class="butt_page">首&nbsp;页</button>
+			<button id="Pre_page" href="javascript:void(0)" onclick="Nextpage('-')" class="butt_page">上一页</button>
+			<span>第<span id="curr_page">1</span>页，共<span id="page_num">1</span>页&nbsp;</span>
+			<button id="Next_page" href="javascript:void(0)" onclick="Nextpage('+')" class="butt_page">下一页</button>
+			<button id="Las_page" href="javascript:void(0)" onclick="Topage(0)" class="butt_page">尾&nbsp;页</button>
+		</div>
+	</div>
+	
+	<!--遮罩层：用于显示弹层后遮盖下面的页面元素-->
+	<div id="overlay" class="overlay"></div>	
+	<!--弹层：机房信息-->
+	<div id="form_IDC" class="popwindow">
+		<div id="form_IDC_title" class="pop_head">机房信息</div>
+		<div class="pop_body">
+			<table cellspacing="0" cellpadding="0" border="0">
+			<tbody>	
+				<tr>	
+					<td align="right">机房：</td>
+					<td><input type="text" id="idc"></input></td>
+				</tr>
+				<tr>
+					<td align="right">联系人：</td>
+					<td><input type="text" id="contact"></input></td>
+				</tr>	
+				<tr>	
+					<td align="right">联系电话：</td>
+					<td><input id="mobile"></input></td>
+				</tr>
+				
+				<tr>
+					<td align="right">电子邮件：</td>
+					<td><input id="email"></input></td>
+				</tr>		
+				<tr>
+					<td align="right">联系地址：</td>
+					<td><input id="address"></input></td>
+				</tr>
+				<tr>
+					<td align="right">说明：</td>
+					<td><input id="note"></input></td>
+				</tr>		
+				<tr>
+					<td colspan="2" align="center">
+						<button href="javascript:void(0)" onclick="IDC_save()" id="butt_save" data-value="AddIDC">保存</button>
+						<button href="javascript:void(0)" onclick="CloseForm('#form_IDC','#overlay')">关闭</button>
+					</td>				
+				</tr>
+			</tbody>
+			</table>
+		</div>
+	</div>
+	<!--弹层：警告-->
+	<div id="form_alert" class="popwindow">
+		<div id="form_alert_title" class="pop_head">友好提醒</div>
+		<div class="pop_body" style="padding:10px 10px 10px 10px;">
+			<table cellspacing="0" cellpadding="0"><tbody>
+				<tr>
+					<td valign="bottom">
+						<img src="img/alert.jpg" style="margin-right: 10px;">
+					</td>
+					<td><span id="alert_mess"></span></td>
+				</tr>
+				<tr>
+					<td colspan="2" align="center">
+						<button class="form_butt" href="javascript:void(0)" onclick="CloseForm('#form_alert','#overlay')">确定</button>
+					</td>
+				</tr>
+			</tbody></table>
+		</div>
+	</div>
+	<!--弹层：警告-->
+	<div id="form_confirm" class="popwindow">
+		<div id="form_confirm_title" class="pop_head">友好提醒</div>
+		<div class="pop_body">
+			<table cellspacing="0" cellpadding="0"><tbody>
+				<tr>
+					<td rowspan="2">
+						<img src="img/alarm.jpg" style="margin-right: 10px;">
+					</td>
+					<td id="alertmess">确认要删除机房信息吗？机房如果关联了设备等信息将无法成功删除。</td>
+				</tr>
+				<tr>
+					<td align="center">
+						<button id="butt_confirm" href="javascript:void(0)" onclick="confirmTo()">确定</button>
+						<button href="javascript:void(0)" onclick="CloseForm('#form_confirm','#overlay')">取消</button>
+					</td>
+				</tr>
+			</tbody></table>
+		</div>
+	</div>
+</body>
+<script type="text/javascript" src="js/jquery.js"></script>
+<script type="text/javascript" src="js/comm.js"></script>
+<script type="text/javascript" src="js/IDC.js"></script>
+</html>

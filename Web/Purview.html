@@ -1,0 +1,137 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>权限管理</title>
+	<link rel="stylesheet" type="text/css" href="css/comm.css">
+	<link rel="stylesheet" type="text/css" href="css/Purview.css">
+</head>
+
+<body>
+	<div id="container">
+	<div id="Crumbs">系统配置&nbsp;>&nbsp;&nbsp;权限管理</div>
+	<table width="100%" cellspacing="0" cellpadding="0">
+	<tbody><tr>
+		<td width="35%" valign="top">
+			<header style="padding-left: 0">
+				<select id="filt_key">
+					<option value="usrname">账号</option>
+					<option value="fullname">用户名</option>
+				</select>
+				<input type="text" id="filt_value">
+				<button class="head_butt head_btc_deep" href="javascript:void(0)" onclick="findusr()">快速查找</button>
+			</header>
+			<table id="thead_usrlist" width="95.3%" cellspacing="0" cellpadding="0">
+			<thead>
+				<th width="109px">账号</th>
+				<th style="border-right: 0">用户名</th>
+			</thead>
+			</table>
+			<div id="usrlist">
+				<table id="tab_usrlist" width="100%" cellspacing="0" cellpadding="0">
+				<col width="110px">
+				<tbody id="tbody_usrlist">
+				</tbody>
+				</table>
+			</div>
+		</td>
+		<td width="73%" valign="top">
+			<!--功能按钮-->
+			<header>
+				<button class="head_butt head_btc_red" href="javascript:void(0)" onclick="open_form('#form_confirm','#overlay')">初始化权限表</button>	
+				<button class="head_butt head_btc_highlight" href="javascript:void(0)" onclick="SaveConf()">保存修改</button>
+				<button class="head_butt head_btc_highlight" href="javascript:void(0)" onclick="SelectAll()">选择全部</button>
+				<button class="head_butt head_btc_highlight" href="javascript:void(0)" onclick="ClearAll()">清除全部</button>
+			</header>
+			<div id="purviewlist">
+			<table id="tab_purviewlist" width="97%" cellspacing="0" cellpadding="0">
+				<tbody id="tbody_purviewlist">
+					<tr>
+						<td colspan="5"><div class="module_title">机房管理</div></td>
+					</tr>
+					<tr>						
+						<td><input type="checkbox" id="ServerRoom">机房</td>
+						<td><input type="checkbox" id="Server_online">线上设备</td>
+						<td><input type="checkbox" id="VM">虚拟机</td>
+						<td><input type="checkbox" id="Log">操作日志</td>
+						<td><input type="checkbox" id="Service">服务</td>
+					</tr>
+					<tr>
+						<td colspan="5"><div class="module_title">IP管理</div></td>
+					</tr>
+					<tr>
+						<td><input type="checkbox" id="Office_parts">公网IP</td>
+						<td><input type="checkbox" id="Computer">私有IP</td>
+					</tr>
+					<tr>
+						<td colspan="5"><div class="module_title">库房管理</div></td>
+					</tr>
+					<tr>
+						<td width="20%"><input type="checkbox" id="Parts">零配件</td>
+						<td width="20%"><input type="checkbox" id="Server">库房设备</td>
+						<td width="20%"><input type="checkbox" id="Fixrecord">设备维修跟踪</td>
+						<td width="20%"><input type="checkbox" id="Supplier">供货商</td>
+						<td width="20%"><input type="checkbox" id="Maintenance_Agents">维修服务商</td>
+					</tr>
+					<tr>
+						<td colspan="5"><div class="module_title">系统配置</div></td>
+					</tr>
+					<tr>
+						<td><input type="checkbox" id="UsrMange">用户管理</td>
+						<td><input type="checkbox" id="Purview">权限管理</td>
+						<td><input type="checkbox" id="MailConf">邮件服务配置</td>
+						<td><input type="checkbox" id="Dict">字典管理</td>
+					</tr>
+				</tbody>
+			</table>
+			</div>
+		</td>
+	</tr></tbody>
+	</table>					
+	</div><!--用于结束container-->
+	<!--遮罩层：用于显示弹层后遮盖下面的页面元素-->
+	<div id="overlay" class="overlay"></div>
+	<!--弹层：警告-->
+	<div id="form_confirm" class="popwindow">
+		<div id="form_confirm_title" class="pop_head">友好提醒</div>
+		<div class="pop_body">
+			<table cellspacing="0" cellpadding="0"><tbody>
+				<tr>
+					<td rowspan="2">
+						<img src="img/alarm.jpg" style="margin-right: 10px;">
+					</td>
+					<td>请确认是否要初始化权限表，执行此操作<br>会导致部分用户操作权限出问题！</td>
+				</tr>
+				<tr>
+					<td align="center">
+						<button href="javascript:void(0)" onclick="InitConf()">确定</button>
+						<button href="javascript:void(0)" onclick="CloseForm('#form_confirm','#overlay')">取消</button>
+					</td>
+				</tr>
+			</tbody></table>
+		</div>
+	</div>
+	<!--弹层：提醒-->
+	<div id="form_alert" class="popwindow">
+		<div id="form_alert_title" class="pop_head">友好提醒</div>
+		<div class="pop_body" style="padding:10px 10px 10px 10px;">
+			<table cellspacing="0" cellpadding="0"><tbody>
+				<tr>
+					<td valign="bottom">
+						<img src="img/alert.jpg" style="margin-right: 10px;">
+					</td>
+					<td><span id="alert_mess"></span></td>
+				</tr>
+				<tr>
+					<td colspan="2" align="center">
+						<button class="form_butt" href="javascript:void(0)" onclick="CloseForm('#form_alert','#overlay')">确定</button>
+					</td>
+				</tr>
+			</tbody></table>
+		</div>
+	</div>
+</body>
+<script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
+<script type="text/javascript" src="js/comm.js"></script>
+<script type="text/javascript" src="js/Purview.js"></script>
+</html>

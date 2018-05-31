@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="UTF-8"?><Sys-config>
+<DB_conf>
+	<HostName>192.168.55.22</HostName>
+	<Port>3306</Port>
+	<DBname>eas</DBname>
+	<Usrname>root</Usrname>
+	<Passwd>root</Passwd><!--系统数据库配置信息-->
+</DB_conf>
+<LDAP_conf>
+	<host>172.16.8.1</host> 
+ 	<port>389</port> 
+	<domain>@tech.cig.com.cn</domain> 
+	<admin>sunwanxing</admin> 	
+	<pwd>Swx@123</pwd>
+	<last_sync_time></last_sync_time>
+	<BaseDN>
+	</BaseDN>
+</LDAP_conf>
+<Mail_conf>
+	<smtpHost>mail.hd.cig.com.cn</smtpHost>
+	<account>asws@hd.cig.com.cn</account>
+	<passwd>NDU886mckJ</passwd>
+	<tls>false</tls>
+	<ssl>false</ssl>
+	<port>25</port>
+	<auth>true</auth>
+</Mail_conf>
+</Sys-config>

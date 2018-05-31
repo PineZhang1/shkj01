@@ -1,0 +1,254 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>库存设备管理</title>
+	<link rel="stylesheet" type="text/css" href="css/comm.css">
+	<link rel="stylesheet" type="text/css" href="css/Server.css">	
+</head>
+
+<body>
+	<div id="Crumbs">库房管理&nbsp;>&nbsp;&nbsp;库存设备</div>
+	<div id="server_body">				
+		<table width=100% cellspacing="0" cellpadding="0">
+		<tbody><tr>
+			<td width="32%">
+				<button class="head_butt" href="javascript:void(0)" onclick="AddDevice()">新增设备</button>
+				<button class="head_butt" href="javascript:void(0)" onclick="DelDevice()">删除设备</button>
+				<button class="head_butt" href="javascript:void(0)" onclick="editinfo()">变更信息</button>
+				<button class="head_butt" href="javascript:void(0)" onclick="online()">上架</button>
+				<button class="head_butt" href="javascript:void(0)" onclick="maintenance()">维修</button>
+			</td>
+			<td id="static_info">
+				(统计：库房闲置服务器共<span id="sum_server"></span>台,
+				交换机<span id="sum_switch"></span>台,
+				防火墙<span id="sum_fireware"></span>台,
+				其他设备<span id="sum_otherdevice"></span>台。) 
+			</td>
+			<td align="right">
+				<select id="filt_key">
+					<option value="type">类别</option>
+					<option value="model">型号</option>
+					<option value="status">状态</option>
+					<option value="asset_id">资产编号</option>
+					<option value="series_num">设备序列号</option>
+				</select>
+				<input type="text" id="filt_value">
+				<button class="head_butt" href="javascript:void(0)" onclick="tofilt()" style="width: 70px;">快速查找</button>
+			</td>
+		</tr></tbody>
+		</table>
+		
+		<table id="tab_server_list" width=100% cellspacing="0" cellpadding="0">
+			<thead>
+				<th style="border-left: 0" width="120px">资产编号</th>
+				<th width="70px">类别</th>
+				<th width="100px">型号</th>				
+				<th width="100px">设备序列号</th>
+				<th width="300px">配置</th>
+				<th width="50px">状态</th>	
+				<th width="90px">过保时间</th>
+				<th width="80px">单价</th>				
+				<th>说明</th>
+			</thead>
+			<tbody id="tbody_server_list">
+			</tbody>
+		</table>
+
+		<div id="pages">
+			<button id="Fir_page" href="javascript:void(0)" onclick="Topage(1)" class="butt_page">首&nbsp;页</button>
+			<button id="Pre_page" href="javascript:void(0)" onclick="Nextpage('-')" class="butt_page">上一页</button>
+			<span>第<span id="curr_page">1</span>页，共<span id="page_num">1</span>页&nbsp;</span>
+			<button id="Next_page" href="javascript:void(0)" onclick="Nextpage('+')" class="butt_page">下一页</button>
+			<button id="Las_page" href="javascript:void(0)" onclick="Topage(0)" class="butt_page">尾&nbsp;页</button>
+		</div>
+	</div>
+	
+	<!--遮罩层：用于显示弹层后遮盖下面的页面元素-->
+	<div id="overlay" class="overlay"></div>	
+	<!--弹层：新增设备-->
+	<div id="form_Servinfo" class="popwindow">
+		<div id="form_Servinfo_title" class="pop_head">设备信息</div>
+		<div class="pop_body">
+			<table cellspacing="0" cellpadding="0" border="0">
+			<tbody>	
+				<tr>
+					<td align="right">资产编号：</td>
+					<td><input id="asset_id"></input></td>
+				</tr>
+				<tr>	
+					<td align="right">设备类别：</td>
+					<td><select id="type">
+						<option>服务器</option>
+						<option>交换机</option>
+						<option>防火墙</option>
+						<option>其他</option>
+					</select></td>
+				</tr>
+				<tr>	
+					<td align="right">型号：</td>
+					<td><input id="model"></input></td>
+				</tr>
+						
+				<tr>
+					<td align="right">序列号：</td>
+					<td><input id="series_num"></input></td>
+				</tr>
+				<tr>
+					<td align="right">配置：</td>
+					<td><input id="capacity"></input></td>
+				</tr>
+				<tr>
+					<td align="right">单价：</td>
+					<td><input id="price" data-value=""></input></td>
+				</tr>
+				<tr>
+					<td align="right">过保时间：</td>
+					<td><input id="protect_time" type="date"></input></td>
+				</tr>
+				<tr>
+					<td align="right">说明：</td>
+					<td><input id="note"></input></td>
+				</tr>		
+			<tr>
+				<td colspan="2" align="center">
+					<button href="javascript:void(0)" onclick="device_save()" id="save_butt_serv" data-value="AddServ">保存</button>
+					<button href="javascript:void(0)" onclick="CloseForm('#form_Servinfo','#overlay')">关闭</button>
+				</td>				
+			</tr>
+			</tbody>
+			</table>
+		</div>
+	</div>
+	<!--弹层：设备上架-->
+	<div id="form_online" class="popwindow">
+		<div id="form_online_title" class="pop_head">设备上架</div>
+		<div class="pop_body">
+			<table cellspacing="0" cellpadding="0" border="0">
+			<tbody>	
+				<tr>	
+					<td align="right">设备类别：</td>
+					<td><span id="ol_type"></span></td>
+				</tr>
+				<tr>
+					<td align="right">资产编号：</td>
+					<td width="150px"><span id="ol_asset_id"></span></td>
+				</tr>	
+				<tr>	
+					<td align="right">机房：</td>
+					<td><select id="IDClist"></select></td>
+				</tr>
+				<tr>
+					<td align="right">机柜：</td>
+					<td><input id="cabinet"></input></td>
+				</tr>
+				<tr>
+					<td align="right">层号：</td>
+					<td><input id="layer"></input></td>
+				</tr>
+				<tr>
+					<td align="right">IP地址：</td>
+					<td><input id="ipaddr1"></input></td>
+				</tr>	
+				<tr>
+					<td align="right">操作系统：</td>
+					<td><select id="os"></select></td>
+				</tr>			
+				<tr>
+					<td align="right">使用人：</td>
+					<td><select id="user"></select></td>
+				</tr>
+				<tr>
+					<td align="right">说明：</td>
+					<td><input id="ol_note"></input></td>
+				</tr>				
+			<tr>
+				<td colspan="2" align="center">
+					<button href="javascript:void(0)" onclick="device_online()">确定</button>
+					<button href="javascript:void(0)" onclick="CloseForm('#form_online','#overlay')">关闭</button>
+				</td>				
+			</tr>
+			</tbody>
+			</table>
+		</div>
+	</div>
+	<!--弹层：设备维修-->
+	<div id="form_maintenance" class="popwindow">
+		<div id="form_maintenance_title" class="pop_head">设备维修</div>
+		<div class="pop_body">
+			<table cellspacing="0" cellpadding="0" border="0">
+			<tbody>	
+				<tr>	
+					<td align="right">设备类别：</td>
+					<td><span id="maint_type"></span></td>
+				</tr>
+				<tr>
+					<td align="right">资产编号：</td>
+					<td width="150px"><span id="maint_asset_id"></span></td>
+				</tr>	
+				<tr>	
+					<td align="right">维修服务商：</td>
+					<td><select id="MAlist"></select></td>
+				</tr>
+				<tr>
+					<td align="right">送修时间：</td>
+					<td><input type="date" id="maint_time"></input></td>
+				</tr>
+				<tr>
+					<td align="right" valign="top"><div style="padding-top: 10px">送修说明：</div></td>
+					<td><textarea id="maint_note" style="margin-top: 10px;height: 60px;"></textarea></td>
+				</tr>							
+				<tr>
+					<td colspan="2" align="center">
+						<button href="javascript:void(0)" onclick="device_fix()">确定</button>
+						<button href="javascript:void(0)" onclick="CloseForm('#form_maintenance','#overlay')">关闭</button>
+					</td>				
+				</tr>
+			</tbody>
+			</table>
+		</div>
+	</div>
+	<!--弹层：警告-->
+	<div id="form_confirm" class="popwindow">
+		<div id="form_confirm_title" class="pop_head">友好提醒</div>
+		<div class="pop_body">
+			<table cellspacing="0" cellpadding="0"><tbody>
+				<tr>
+					<td rowspan="2">
+						<img src="img/alarm.jpg" style="margin-right: 10px;">
+					</td>
+					<td>确认要删除该设备吗？此操作不可逆，请确认。</td>
+				</tr>
+				<tr>
+					<td align="center">
+						<button href="javascript:void(0)" onclick="ToConfirm()">确定</button>
+						<button href="javascript:void(0)" onclick="CloseForm('#form_confirm','#overlay')">取消</button>
+					</td>
+				</tr>
+			</tbody></table>
+		</div>
+	</div>
+	<!--弹层：警告-->
+	<div id="form_alert" class="popwindow">
+		<div id="form_alert_title" class="pop_head">友好提醒</div>
+		<div class="pop_body" style="padding:10px 10px 10px 10px;">
+			<table cellspacing="0" cellpadding="0"><tbody>
+				<tr>
+					<td valign="bottom">
+						<img src="img/alert.jpg" style="margin-right: 10px;">
+					</td>
+					<td><span id="alert_mess"></span></td>
+				</tr>
+				<tr>
+					<td colspan="2" align="center">
+						<button class="form_butt" href="javascript:void(0)" onclick="CloseForm('#form_alert','#overlay')">确定</button>
+					</td>
+				</tr>
+			</tbody></table>
+		</div>
+	</div>
+</body>
+<script type="text/javascript" src="js/jquery.js"></script>
+<script type="text/javascript" src="js/comm.js"></script>
+<script type="text/javascript" src="js/Server.js"></script>
+</html>

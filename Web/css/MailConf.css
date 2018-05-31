@@ -1,0 +1,77 @@
+body{
+	margin:0px;
+	border:0px;
+	overflow-x : hidden;
+	overflow-y: auto;
+	background-color: #F8F8D8;
+}
+button{
+	font-family:'微软雅黑';	
+	font-size: 12px;
+}
+select{
+	font-family:'微软雅黑';	
+	font-size: 12px;
+}
+tr{
+	font-family:'微软雅黑';	
+	font-size: 12px;
+	height: 45px;
+}
+.box{
+	margin-right: auto;
+	margin-left: auto;
+	margin-top: 40px;
+	padding: 30px;
+	padding-bottom: 30px;
+	width: 350px;
+	border-radius: 10px;
+	border: 1px solid #868A8D;
+	background-color: #F7F7F7;
+	text-align: center;
+}
+#container{
+	padding-top:17px;
+	width: 97%;
+	margin-right: auto;
+	margin-left: auto;
+	margin-bottom: 40px;
+}
+#form_confirm{
+	top:15%;
+	left:35%;
+	line-height: 23px;
+}
+#form_confirm button{
+	border:2px outset;
+	border-radius: 5px;
+	margin-top: 15px;
+	margin-left: 10px;
+	margin-right: 10px;
+	width: 60px;
+	height: 25px;
+}
+#Crumbs{
+	font-size: 12px;
+	font-family:'微软雅黑';
+	color:#868A8D;
+	margin-bottom: 15px;
+}
+#tab_mailconf{
+	margin-left: auto;
+	margin-right: auto;
+}
+#saveconf{
+	margin-right: 15px;
+	border:2px outset;
+	border-radius: 5px;
+	width: 70px;
+	height: 25px;
+}
+#testconf{
+	margin-left: 15px;
+	border:2px outset;
+	border-radius: 5px;
+	width: 70px;
+	height: 25px;
+}

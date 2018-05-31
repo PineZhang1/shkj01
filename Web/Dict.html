@@ -1,0 +1,87 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>字典管理</title>
+	<link rel="stylesheet" type="text/css" href="css/comm.css">
+	<link rel="stylesheet" type="text/css" href="css/dict.css">
+</head>
+
+<body>
+	<div id="container">
+	<div id="Crumbs">系统配置&nbsp;>&nbsp;&nbsp;字典管理</div>	
+	<div id="board">
+		<header>
+			<button class="head_butt" href="javascript:void(0)" onclick="AddDict()">添加</button>
+			<button class="head_butt" href="javascript:void(0)" onclick="DelDict()">删除</button>
+		</header>
+		<table width="97%" cellspacing="0" cellpadding="0">
+			<tbody>
+				<tr>
+					<td width="25%">
+						<div class="dict_title"><span>操作系统:</span></div>
+						<select multiple="6" class="dictlist" id="os"><option> </option>
+						</select>
+					</td>
+					<td width="25%">
+						<div class="dict_title"><span>零配件类型：</span></div>
+						<select multiple="6" class="dictlist" id="part_type"><option> </option></select>
+					</td>
+					<td width="25%">
+						<div class="dict_title"><span>公司部门联系人：</span></div>
+						<select multiple="6" class="dictlist" id="dept_contractor"><option> </option></select>
+					</td>
+					<td width="25%"></td>
+					<td width="25%"></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+						
+	</div><!--用于结束container-->
+	<!--遮罩层：用于显示弹层后遮盖下面的页面元素-->
+	<div id="overlay" class="overlay"></div>
+	<!--弹层：警告-->
+	<div id="form_dict" class="popwindow">
+		<div id="form_dict_title" class="pop_head"></div>
+		<div class="pop_body">
+			<table cellspacing="0" cellpadding="0"><tbody>
+				<tr>
+					<td>
+						新字典项：
+						<input type="text" id="dict_key" style="width: 200px">
+					</td>
+				</tr>
+				<tr>
+					<td align="center">
+						<button href="javascript:void(0)" onclick="confirmTo()">确定</button>
+						<button href="javascript:void(0)" onclick="CloseForm('#form_dict','#overlay')">取消</button>
+					</td>
+				</tr>
+			</tbody></table>
+		</div>
+	</div>
+	<!--弹层：提醒-->
+	<div id="form_alert" class="popwindow">
+		<div id="form_alert_title" class="pop_head">友好提醒</div>
+		<div class="pop_body" style="padding:10px 10px 10px 10px;">
+			<table cellspacing="0" cellpadding="0"><tbody>
+				<tr>
+					<td valign="bottom">
+						<img src="img/alert.jpg" style="margin-right: 10px;">
+					</td>
+					<td><span id="alert_mess"></span></td>
+				</tr>
+				<tr>
+					<td colspan="2" align="center">
+						<button class="form_butt" href="javascript:void(0)" onclick="CloseForm('#form_alert','#overlay')">确定</button>
+					</td>
+				</tr>
+			</tbody></table>
+		</div>
+	</div>
+</body>
+<script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
+<script type="text/javascript" src="js/comm.js"></script>
+<script type="text/javascript" src="js/dict.js"></script>
+</html>

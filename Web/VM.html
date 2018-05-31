@@ -1,0 +1,285 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>虚拟机管理</title>
+	<link rel="stylesheet" type="text/css" href="css/comm.css">
+	<link rel="stylesheet" type="text/css" href="css/vm.css">
+	<link rel="stylesheet" type="text/css" href="css/jquery.treeview.css"/>
+</head>
+
+<body>
+	<div id="Crumbs">机房管理&nbsp;>&nbsp;&nbsp;虚拟机</div>
+	<div id="vm_body">
+		<table id="body_frame" width=100% cellspacing="0" cellpadding="0">
+		<tbody>
+			<tr>
+				<td width=180px valign="top">
+					<div id="treebox">
+						<ul id="treelist" class="filetree">
+						</ul>
+					</div>
+				</td>
+				<td valign="top">
+					<div id="vm_basicinfo">
+						<table cellspacing="0" cellpadding="0" width="100%">
+						<tbody><tr>
+							<td>
+								<span id="title_vm_basicinfo">服务器基本信息</span>
+								<img id="ico_addserv" src="img/addvm.jpg" title="添加主机" href="javascript:void(0)" onclick="addServ()">
+								<img id="ico_editserv" src="img/editvm.jpg" title="编辑主机" href="javascript:void(0)" onclick="editServ()">
+								<img id="ico_delserv" src="img/delvm.jpg" title="删除主机" href="javascript:void(0)" onclick="delServ()">
+							</td>
+							<td align="right">
+								<button id="tag_mem"></button>
+								-
+								内存使用率，
+								<button id="tag_disk"></button>
+								-
+								磁盘使用率
+							</td>
+						</tr></tbody>
+						</table>
+						
+						<table id="tab_vm_basicinfo" width="97%" cellspacing="0" cellpadding="0">
+						<tbody>
+							<tr>
+								<td width="180px">资产编号：<span id="asset_id"></span></td>
+								<td width="180px">IP地址：<span id="ipaddr"></span></td>
+								<td width="180px">虚机数量：<span id="vm_num"></span></td>
+								<td width="180px">位置：<span id="locate"></span></td>	
+								<td rowspan="4" width="130px">
+									<div id="Chart_usage" class="small_chart"></div>
+								</td>							
+							</tr>		
+							<tr>
+								<td>CPU：<span id="cpu"></span></td>
+								<td>已用CPU：<span id="cpu_used"></span></td>
+								<td>剩余CPU：<span id="cpu_usable"></span></td>
+								<td>使用率：<span id="cpu_rate_usage"></span>%</td>								
+							</tr>
+							<tr>
+								<td>内存：<span id="mem"></span>G</td>
+								<td>已用内存：<span id="mem_used"></span>G</td>
+								<td>剩余内存：<span id="mem_usable"></span>G</td>
+								<td>使用率：<span id="mem_rate_usage"></span>%</td>
+							</tr>
+							<tr>
+								<td>磁盘：<span id="disk"></span>G</td>
+								<td>已用磁盘：<span id="disk_used"></span>G</td>
+								<td>剩余磁盘：<span id="disk_usable"></span>G</td>
+								<td>使用率：<span id="disk_rate_usage"></span>%</td>
+							</tr>
+						</tbody>
+						</table>
+						<div id="bottom_vm_basicinfo">
+							<table width=100% cellspacing="0" cellpadding="0">
+							<tbody><tr>
+								<td width="50%">
+									<button class="head_butt" href="javascript:void(0)" onclick="addVM()">添加新虚机</button>
+									<button class="head_butt" href="javascript:void(0)" onclick="editVM()">变更虚机信息</button>
+									<button class="head_butt" href="javascript:void(0)" onclick="delVM()">删除虚拟机</button>
+								</td>
+								<td align="right">
+									<select id="filt_key">
+										<option value="name">虚拟机名称</option>
+										<option value="ip">IP地址</option>
+										<option value="os">操作系统</option>
+										<option value="user">使用人</option>
+									</select>
+									<input type="text" id="filt_value">
+									<button class="head_butt" href="javascript:void(0)" onclick="findVM()" style="width: 70px;margin-right: 1px;">快速查找</button>
+								</td>
+							</tr></tbody>
+							</table>
+						</div>					
+					</div>
+					<div id="vmlist">
+						<table id="tab_vmlist" width=100% cellspacing="0" cellpadding="0">
+						<thead>
+							<th style="border-left: 0" width="30px">序号</th>
+							<th width="130px">名称</th>
+							<th width="180px">操作系统</th>
+							<th width="30px">CPU</th>
+							<th width="50px">内存(G)</th>
+							<th width="50px">磁盘(G)</th>
+							<th width="90px">IP地址</th>
+							<th>用途</th>
+							<th width="160px">使用人</th>
+						</thead>
+						<tbody id="tb_vmlist">
+						</tbody>
+						</table>
+					</div>
+				</td>
+			</tr>
+		</tbody>
+		</table>
+	</div>
+	
+	<!--遮罩层：用于显示弹层后遮盖下面的页面元素-->
+	<div id="overlay" class="overlay"></div>	
+	<!--弹层：新虚拟机-->
+	<div id="VMinfo" class="popwindow">
+		<div id="VMinfo_title" class="pop_head">虚拟机信息</div>
+		<div class="pop_body">
+			<table cellspacing="0" cellpadding="0" border="0">
+			<tbody>	
+			<tr>
+				<td align="right">主机：</td>
+				<td><select id="vm_host"></select></td>
+			</tr>
+			<tr>
+				<td align="right">虚拟机名：</td>
+				<td><input id="vm_name"></input></td>
+			</tr>
+			<tr>
+				<td align="right">操作系统：</td>
+				<td><select id="vm_os"></select></td>
+			</tr>
+			<tr>
+				<td align="right">IP地址：</td>
+				<td><input id="vm_ip"></input></td>
+			</tr>
+			<tr>
+				<td align="right">vcpu：</td>
+				<td><input id="vm_cpu"></input></td>
+			</tr>
+			<tr>
+				<td align="right">内存：</td>
+				<td><input id="vm_mem"></input>G</td>
+			</tr>
+			<tr>
+				<td align="right">磁盘：</td>
+				<td><input id="vm_disk"></input>G</td>
+			</tr>
+			<tr>
+				<td align="right">使用人：</td>
+				<td><select id="vm_user"></select></td>
+			</tr>
+			<tr>
+				<td align="right">用途：</td>
+				<td><input id="vm_des"></input></td>
+			</tr>
+			<tr>
+				<td colspan="2" align="center">
+					<button href="javascript:void(0)" onclick="VM_save()" id="save_butt" data-value="AddVM">保存</button>
+					<button href="javascript:void(0)" onclick="CloseForm('#VMinfo','#overlay')">关闭</button>
+				</td>				
+			</tr>
+			</tbody>
+			</table>
+		</div>
+	</div>
+	<!--弹层：新主机-->
+	<div id="Servinfo" class="popwindow">
+		<div id="Servinfo_title" class="pop_head">服务器信息</div>
+		<div class="pop_body">
+			<table cellspacing="0" cellpadding="0" border="0">
+			<tbody>	
+				<tr>
+					<td align="right">机房：</td>
+					<td width="150px"><select id="popform_IDC"></select></td>
+				</tr>
+			<tr>
+				<td align="right">服务器：</td>
+				<td width="150px"><select id="popform_host"></select></td>
+			</tr>
+			<tr>
+				<td align="right">可用CPU：</td>
+				<td><input id="popform_CPU"></input>G</td>
+			</tr>
+			<tr>
+				<td align="right">可用内存：</td>
+				<td><input id="popform_Mem"></input>G</td>
+			</tr>
+			<tr>
+				<td align="right">可用磁盘：</td>
+				<td><input id="popform_Disk"></input>G</td>
+			</tr>
+			<tr>
+				<td colspan="2" align="center">
+					<button href="javascript:void(0)" onclick="Serv_save()" id="save_butt_serv" data-value="AddServ">保存</button>
+					<button href="javascript:void(0)" onclick="CloseForm('#Servinfo','#overlay')">关闭</button>
+				</td>				
+			</tr>
+			</tbody>
+			</table>
+		</div>
+	</div>
+	<!-- 弹层-虚拟机快速搜索结果 -->
+	<div id="form_findvm" class="popwindow">
+		<div id="form_findvm_title" class="pop_head">虚拟机快速搜索结果</div>
+		<div class="pop_body">
+			<div id="findvm_nuum"></div>			
+			<div id="findvmlist">
+				<table id="tab_findvmlist" cellspacing="0" cellpadding="0">
+					<thead>
+						<tr style="height:25px">
+							<th class="title_tab" width="150px">机房</th>
+							<th class="title_tab" width="90px">宿主机</th>
+							<th class="title_tab" width="130px">虚拟机</th>
+							<th class="title_tab" width="90px">IP地址</th>
+							<th class="title_tab" width="160px">操作系统</th>
+							<th class="title_tab" width="30px">CPU</th>
+							<th class="title_tab" width="50px">内存(G)</th>
+							<th class="title_tab" width="50px">磁盘(G)</th>
+							<th class="title_tab" width="120px">使用人</th>
+						</tr>
+					</thead>
+					<tbody id="tbody_findvmlist">
+					</tbody>
+				</table>
+			</div>
+			<div class="form_bottom" style="text-align: center;">
+				<button href="javascript:void(0)" onclick="CloseForm('#form_findvm','#overlay')">关闭</button>
+			</div>
+		</div>
+	</div>
+	<!--弹层：警告-->
+	<div id="form_alert" class="popwindow">
+		<div id="form_alert_title" class="pop_head">友好提醒</div>
+		<div class="pop_body" style="padding:10px 10px 10px 10px;">
+			<table cellspacing="0" cellpadding="0"><tbody>
+				<tr>
+					<td valign="bottom">
+						<img src="img/alert.jpg" style="margin-right: 10px;">
+					</td>
+					<td><span id="alert_mess"></span></td>
+				</tr>
+				<tr>
+					<td colspan="2" align="center">
+						<button class="form_butt" href="javascript:void(0)" onclick="CloseForm('#form_alert','#overlay')">确定</button>
+					</td>
+				</tr>
+			</tbody></table>
+		</div>
+	</div>
+	<!--弹层：警告-->
+	<div id="form_confirm" class="popwindow">
+		<div id="form_confirm_title" class="pop_head">友好提醒</div>
+		<div class="pop_body">
+			<table cellspacing="0" cellpadding="0"><tbody>
+				<tr>
+					<td rowspan="2">
+						<img src="img/alarm.jpg" style="margin-right: 10px;">
+					</td>
+					<td id="alertmess"></td>
+				</tr>
+				<tr>
+					<td align="center">
+						<button id="butt_confirm" href="javascript:void(0)" onclick="confirmTo()">确定</button>
+						<button href="javascript:void(0)" onclick="CloseForm('#form_confirm','#overlay')">取消</button>
+					</td>
+				</tr>
+			</tbody></table>
+		</div>
+	</div>
+</body>
+<script type="text/javascript" src="js/jquery.js"></script>
+<script type="text/javascript" src="js/comm.js"></script>
+<script type="text/javascript" src="js/jquery.treeview.js"></script>
+<script type="text/javascript" src="js/echarts.min.js"></script>
+<script type="text/javascript" src="js/buildchart.js"></script>
+<script type="text/javascript" src="js/vm.js"></script>
+</html>

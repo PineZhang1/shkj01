@@ -1,0 +1,140 @@
+body{
+	margin:0px;
+	border:0px;
+	overflow-x : hidden;
+	background-color: #F8F8D8;
+}
+input{
+	font-family:'微软雅黑';	
+	font-size: 12px;
+	padding-left: 5px;
+}
+button{
+	font-family:'微软雅黑';	
+	font-size: 12px;
+}
+select{
+	font-family:'微软雅黑';	
+	font-size: 12px;
+	height: 22px;
+}
+header span{
+	font-family:'微软雅黑';	
+	font-size: 12px;
+	color: #868A8D;
+}
+#container{
+	padding-top:17px;
+	width: 97%;
+	margin-right: auto;
+	margin-left: auto;
+}
+.pop_bottom_butt{
+	display:block;
+	position:relative;
+	top:15px;
+	text-align:center;
+}
+.pop_bottom_butt button{
+	margin-left:20px;
+	margin-right:20px;
+	width: 60px;
+	height:25px;
+	border-radius: 5px;
+}
+.form_butt{
+	width: 60px;
+	height:25px;
+	border-radius: 5px;
+}
+.module_butt{
+	font-family:'微软雅黑';	
+	font-size: 12px;
+	border-radius:5px;
+	border:1px outset #BDD9E5;
+	background-color:#37A4A4;
+	height:25px;
+	margin-right:8px;
+	color:#FFFFFF;
+}
+.th_butt{
+	font-family:'微软雅黑';	
+	font-size: 12px;
+	width:100%;
+	border:1px outset;
+	background-color: #1B7098;
+	color: #FFFFFF;
+	font-weight: 600;
+}
+#Userlist{
+	display:block;
+	position:relative;
+	top:10px;
+}
+#Userlist button{
+	height: 25px;
+}
+#tbody_usrlist th{
+	border-left:1px solid #868A8D;
+}
+#tbody_usrlist tr{
+	background-color: #FFFFFF;
+}
+#tbody_usrlist td{
+	font-family:'微软雅黑';	
+	font-size: 12px;
+	border-bottom:1px solid #868A8D;
+	border-left:1px solid #868A8D;
+	line-height:25px;
+	padding-left:5px;
+	padding-right:5px;
+	height:25px;
+	text-align:center;
+}
+#form_ldap_conf{
+	top:12%;
+	left:8%;
+	width: 820px;
+}
+#ldap_BD{
+	width:650px;
+	margin-top:10px;
+}
+#userinfo_table input{
+	width:180px;
+	padding-left:4px;
+}
+#userinfo_table select{
+	width:188px;
+	padding-left:4px;
+}
+#user_filter{
+	width:180px;
+	padding-left:4px;
+}
+#form_input_BaseDN{
+	top:12%;
+	left:8%;
+}
+#pages{
+	text-align:right;
+	font-family:'微软雅黑';
+	font-size:12px;
+	margin-top:20px;
+	margin-right:10px;
+}
+#pages button{
+	width: 55px;
+	height:22px;
+	border-radius: 5px;
+}
+#form_UserInfo{
+	top:10%;
+	left:18%;
+}
+#Crumbs{
+	font-size: 12px;
+	font-family:'微软雅黑';
+	color:#868A8D;
+	margin-bottom: 15px;
+}

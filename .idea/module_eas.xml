@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_eas" default="compile.module.eas">
+  <dirname property="module.eas.basedir" file="${ant.file.module_eas}"/>
+  
+  <property name="module.jdk.home.eas" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.eas" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.eas" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.eas" value="-encoding UTF-8 -source 8 -target 8 ${compiler.args}"/>
+  
+  <property name="eas.output.dir" value="undefined"/>
+  <property name="eas.testoutput.dir" value="undefined"/>
+  
+  <path id="eas.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="eas.module.production.classpath">
+    <path refid="${module.jdk.classpath.eas}"/>
+  </path>
+  
+  <path id="eas.runtime.production.module.classpath"/>
+  
+  <path id="eas.module.classpath">
+    <path refid="${module.jdk.classpath.eas}"/>
+  </path>
+  
+  <path id="eas.runtime.module.classpath"/>
+  
+  
+  <patternset id="excluded.from.module.eas">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.eas">
+    <patternset refid="excluded.from.module.eas"/>
+  </patternset>
+  
+  
+  <target name="compile.module.eas" depends="compile.module.eas.production,compile.module.eas.tests" description="Compile module EAS"/>
+  
+  <target name="compile.module.eas.production" depends="register.custom.compilers" description="Compile module EAS; production classes"/>
+  
+  <target name="compile.module.eas.tests" depends="register.custom.compilers,compile.module.eas.production" description="compile module EAS; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.eas" description="cleanup module">
+    <delete dir="${eas.output.dir}"/>
+    <delete dir="${eas.testoutput.dir}"/>
+  </target>
+</project>

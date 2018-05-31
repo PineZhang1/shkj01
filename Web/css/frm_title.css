@@ -1,0 +1,65 @@
+body{
+	overflow-y : hidden;
+	margin:0;
+	border:0;
+}
+header{
+	border-bottom:2px solid #6B9AEB;
+	background-color: #19191E;
+}
+#Title{
+	height:40px;
+	line-height:40px;
+	width:350px;
+	font-family:'微软雅黑';	
+	color:#FFFFFF;
+	font-size: large;	
+	font-weight: bolder;	
+}
+#wlcome{
+	font-family:'微软雅黑';
+	font-size:14px;
+	color:#FFFFFF;
+}
+#butt_exit{
+	width:60px;
+	height:25px;
+	font-family:'微软雅黑';	
+	font-size: 14px;
+	color:#FFFFFF;
+	background-color: rgba(206,247,255,0.2);
+	border:1px solid #CEF7FF;
+	border-radius:10px;
+	margin-right: 20px;
+}
+#sidebar{
+	padding-top: 15px;
+}
+.butt_menu{
+	font-family:'微软雅黑';	
+	font-size: 14px;
+	color:#FFFFFF;
+	background-color: rgba(206,247,255,0.2);
+	border:1px outset #CEF7FF;
+	border-radius:5px;
+	margin-top:2px;
+	width:98%;
+	height:30px;
+}
+.submenu{
+	display: block;
+	padding-left: 20px;
+}
+.butt_submenu{
+	border:0;
+	font-family:'微软雅黑';	
+	font-size: 12px;
+	color:#FFFFFF;
+	background-color: rgba(206,247,255,0);
+	display: block;
+	width: 96%;
+	height:26px;
+	padding-left: 35px;
+	text-align:left;
+	background: url(../img/index.png) no-repeat scroll left center transparent;	
+}

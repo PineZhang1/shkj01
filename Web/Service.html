@@ -1,0 +1,165 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>服务</title>
+	<link rel="stylesheet" type="text/css" href="css/comm.css">
+	<link rel="stylesheet" type="text/css" href="css/Service.css">	
+</head>
+
+<body>
+	<div id="Crumbs">机房管理&nbsp;>&nbsp;&nbsp;服务</div>
+	<div id="container">				
+		<table width=100% cellspacing="0" cellpadding="0">
+		<tbody><tr>
+			<td width="20%">
+				<button class="head_butt" href="javascript:void(0)" onclick="AddService()">新增服务</button>
+				<button class="head_butt" href="javascript:void(0)" onclick="DelService()">删除服务</button>
+				<button class="head_butt" href="javascript:void(0)" onclick="EditService()">变更服务</button>
+			</td>
+			<td align="right">
+				<select id="filt_key">
+					<option value="manufacturer">厂商</option>
+					<option value="buy_time">采购时间</option>
+					<option value="protect_time">过保时间</option>
+					<option value="status">状态</option>
+					<option value="user">使用人</option>
+				</select>
+				<input type="text" id="filt_value">
+				<button class="head_butt" href="javascript:void(0)" onclick="tofilt()" style="width: 70px;">快速查找</button>
+			</td>
+		</tr></tbody>
+		</table>
+		
+		<table id="tab_Service_list" width=100% cellspacing="0" cellpadding="0">
+			<thead>
+				<th style="border-left: 0" width="150px">编号</th>
+				<th width="150px">服务</th>
+				<th width="150px">厂商</th>
+				<th width="100px">价格</th>
+				<th width="80px">采购时间</th>
+				<th width="80px">过保时间</th>
+				<th width="50px">状态</th>	
+				<th width="100px">使用人</th>
+				<th width="200px">用途</th>						
+				<th>其他说明</th>
+			</thead>
+			<tbody id="tbody_Service_list">
+			</tbody>
+		</table>
+
+		<div id="pages">
+			<button id="Fir_page" href="javascript:void(0)" onclick="Topage(1)" class="butt_page">首&nbsp;页</button>
+			<button id="Pre_page" href="javascript:void(0)" onclick="Nextpage('-')" class="butt_page">上一页</button>
+			<span>第<span id="curr_page">1</span>页，共<span id="page_num">1</span>页&nbsp;</span>
+			<button id="Next_page" href="javascript:void(0)" onclick="Nextpage('+')" class="butt_page">下一页</button>
+			<button id="Las_page" href="javascript:void(0)" onclick="Topage(0)" class="butt_page">尾&nbsp;页</button>
+		</div>
+	</div>
+	
+	<!--遮罩层：用于显示弹层后遮盖下面的页面元素-->
+	<div id="overlay" class="overlay"></div>	
+	<!--弹层：服务信息-->
+	<div id="form_Service" class="popwindow">
+		<div id="form_Service_title" class="pop_head">服务信息</div>
+		<div class="pop_body">
+			<table cellspacing="0" cellpadding="0" border="0">
+			<tbody>	
+				<tr>
+					<td align="right">服务编号：</td>
+					<td><span id="service_id"></span></td>
+				</tr>
+				<tr>
+					<td align="right">厂商：</td>
+					<td><input id="manufacturer"></input></td>
+				</tr>
+				<tr>	
+					<td align="right">服务：</td>
+					<td><input id="service"></input></td>
+				</tr>	
+				<tr>
+					<td align="right">单价：</td>
+					<td><input id="price" data-value=""></input></td>
+				</tr>
+				<tr>	
+					<td align="right">采购时间：</td>
+					<td><input id="buy_time" type="date"></input></td>
+				</tr>			
+				<tr>
+					<td align="right">过保时间：</td>
+					<td><input id="protect_time" type="date"></input></td>
+				</tr>			
+				<tr>
+					<td align="right">状态：</td>
+					<td><select id="status">
+						<option>正常</option>
+						<option>停用</option>
+						<option>待续费</option>
+					</select></td>
+				</tr>
+				<tr>
+					<td align="right">使用人：</td>
+					<td><select id="user"></select></td>
+				</tr>
+				<tr>
+					<td align="right">用途：</td>
+					<td><input id="purpose"></input></td>
+				</tr>
+				<tr>
+					<td align="right">其他说明：</td>
+					<td><input id="note"></input></td>
+				</tr>		
+			<tr>
+				<td colspan="2" align="center">
+					<button href="javascript:void(0)" onclick="Service_save()" id="butt_save" data-value="AddService">保存</button>
+					<button href="javascript:void(0)" onclick="CloseForm('#form_Service','#overlay')">关闭</button>
+				</td>				
+			</tr>
+			</tbody>
+			</table>
+		</div>
+	</div>
+	<!--弹层：警告-->
+	<div id="form_alert" class="popwindow">
+		<div id="form_alert_title" class="pop_head">友好提醒</div>
+		<div class="pop_body" style="padding:10px 10px 10px 10px;">
+			<table cellspacing="0" cellpadding="0"><tbody>
+				<tr>
+					<td valign="bottom">
+						<img src="img/alert.jpg" style="margin-right: 10px;">
+					</td>
+					<td><span id="alert_mess"></span></td>
+				</tr>
+				<tr>
+					<td colspan="2" align="center">
+						<button class="form_butt" href="javascript:void(0)" onclick="CloseForm('#form_alert','#overlay')">确定</button>
+					</td>
+				</tr>
+			</tbody></table>
+		</div>
+	</div>
+	<!--弹层：警告-->
+	<div id="form_confirm" class="popwindow">
+		<div id="form_confirm_title" class="pop_head">友好提醒</div>
+		<div class="pop_body">
+			<table cellspacing="0" cellpadding="0"><tbody>
+				<tr>
+					<td rowspan="2">
+						<img src="img/alarm.jpg" style="margin-right: 10px;">
+					</td>
+					<td>确定要删除服务项目吗？</td>
+				</tr>
+				<tr>
+					<td align="center">
+						<button id="butt_confirm" href="javascript:void(0)" onclick="confirmTo()">确定</button>
+						<button href="javascript:void(0)" onclick="CloseForm('#form_confirm','#overlay')">取消</button>
+					</td>
+				</tr>
+			</tbody></table>
+		</div>
+	</div>
+</body>
+<script type="text/javascript" src="js/jquery.js"></script>
+<script type="text/javascript" src="js/comm.js"></script>
+<script type="text/javascript" src="js/Service.js"></script>
+</html>

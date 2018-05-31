@@ -1,0 +1,74 @@
+<!DOCTYPE HTML PUBLIC>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>IT资产管理系统</title>
+	<link rel="shortcut icon" type="image/x-icon" href="" />
+	<link rel="stylesheet" type="text/css" href="css/frm_title.css">
+</head>
+
+<body>
+	<header>
+		<table width="100%">
+		<tbody><tr>
+			<td id="Title" align="left">
+				<img src="img/cig_logo2.jpg" width="125px" height="30px;" style="margin-right: 20px;">
+				企业IT资产管理系统
+			</td>
+			<td id="wlcome" align="right">
+				<span>欢迎您，</span><span id="user"></span>
+			</td>		
+			<td width=250px align="right">
+				<button id="butt_exit">退出</button>
+			</td>
+		</tr></tbody>
+		</table>
+	</header>
+	
+	<div id="menu"><table width="100%" cellspacing="0" cellpadding="0">
+		<tbody><tr>
+			<td width="12%" valign="top" style="background-color: #295669;">
+				<div id="sidebar" align="center">
+					<button id="ServerRoom_Man" class="butt_menu">机房管理</button>
+					<div id="ServerRoom_Man_submenu" class="submenu">
+						<button class="butt_submenu" id="IDC" data-value="enable">机房</button>
+						<button class="butt_submenu" id="Server_online" data-value="enable">线上设备</button>
+						<button class="butt_submenu" id="VM" data-value="enable">虚拟机</button>
+						<button class="butt_submenu" id="Log" data-value="enable">操作日志</button>
+						<button class="butt_submenu" id="Service" data-value="enable">服务</button>
+					</div>
+					<button id="IP_Man" class="butt_menu">IP管理</button>
+					<div id="IP_Man_submenu" class="submenu">
+						<button class="butt_submenu" id="PublicIP" data-value="enable">公网IP</button>
+						<button class="butt_submenu" id="PrivateIP" data-value="enable">私有IP</button>	
+					</div>
+
+					<button id="WareHouse_Man" class="butt_menu">库房管理</button>
+					<div id="WareHouse_Man_submenu" class="submenu">
+						<button class="butt_submenu" id="Parts" data-value="enable">零配件</button>
+						<button class="butt_submenu" id="Server" data-value="enable">库存设备</button>
+						<button class="butt_submenu" id="FixRecord" data-value="enable">设备维修跟踪</button>
+						<button class="butt_submenu" id="Supplier" data-value="enable">供应商</button>	
+						<button class="butt_submenu" id="MA" data-value="enable">维修服务商</button>	
+					</div>
+					<button id="sysconf" class="butt_menu">系统配置</button>
+					<div id="sysconf_submenu" class="submenu">
+						<button class="butt_submenu" id="UsrMange" data-value="enable">用户管理</button>
+						<button class="butt_submenu" id="Purview" data-value="enable">权限配置</button>
+						<button class="butt_submenu" id="MailConf" data-value="enable">邮件服务配置</button>
+						<button class="butt_submenu" id="Dict" data-value="enable">字典管理</button>
+					</div>
+				</div>
+			</td>
+			<td>
+				<div>
+					<iframe id="main" width=100% height=600 frameborder=0></iframe>
+				</div>
+			</td>
+		</tr></tbody>
+	</table></div>
+</body>
+<script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
+<script type="text/javascript" src="js/comm.js"></script>
+<script type="text/javascript" src="js/homepage.js"></script>
+</html>
